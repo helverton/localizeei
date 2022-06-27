@@ -1,0 +1,34 @@
+version: "3.8"
+services:
+  mongo:
+    image: mongo
+    container_name: mongodb
+    networks:
+      - back-net
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: santos######
+      MONGO_INITDB_ROOT_PASSWORD: ######
+    volumes:
+      - mongo:/data/db
+
+  node:
+    container_name: node
+    build: .
+    networks:
+      - back-net
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - node:/app/src
+
+volumes:
+  mongo:
+  node:
+
+networks:
+  back-net:
+    driver: bridge
